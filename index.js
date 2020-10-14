@@ -26,6 +26,13 @@ app.get('/canal/:canal', (req, res) => {
   robot.typeStringDelayed(canal, 240)
 })
 
+app.get('/controle/:controle', (req, res) => {
+  const { controle } = req.params
+  res.send(`Controle: ${controle}`)
+  log(`Controle: ${controle}`)
+  robot.typeStringDelayed(controle, 240)
+})
+
 app.get('/canal/nome/:nome', (req, res) => {
   const { nome } = req.params
   const canal = canais[nome] || null

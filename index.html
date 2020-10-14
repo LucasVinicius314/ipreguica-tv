@@ -48,11 +48,21 @@
           <div class="card-header">Canais</div>
           <div class="card-body">
 
-            <button class="btn btn-info my-1">viva</button>
-            <button class="btn btn-info my-1">vivahd</button>
-            <button class="btn btn-info my-1">vivafhd</button>
-            <button class="btn btn-info my-1">viva4k</button>
-            <button class="btn btn-info my-1">sbt</button>
+            <button class="btn btn-info my-1 canal">viva</button>
+            <button class="btn btn-info my-1 canal">vivahd</button>
+            <button class="btn btn-info my-1 canal">vivafhd</button>
+            <button class="btn btn-info my-1 canal">viva4k</button>
+            <button class="btn btn-info my-1 canal">sbt</button>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card my-2">
+          <div class="card-header">Controle</div>
+          <div class="card-body">
+
+            <button class="btn btn-info my-1 mudo">Mudo</button>
 
           </div>
         </div>
@@ -78,9 +88,16 @@
           .catch(e => log(e))
       })
 
-      $('button').on('click', function(){
+      $('button.canal').on('click', function(){
         const nome = $(this).html()
         $.get(`/canal/nome/${nome}`)
+          .then(d => log(d))
+          .catch(e => log(e))
+      })
+
+      $('button.mudo').on('click', () => {
+        const controle = 'm'
+        $.get(`/controle/${controle}`)
           .then(d => log(d))
           .catch(e => log(e))
       })
