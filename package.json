@@ -1,0 +1,14 @@
+{
+  "name": "ipreguica-tv",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Lucas Coelho <58010418+LucasVinicius314@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "robotjs": "^0.6.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
