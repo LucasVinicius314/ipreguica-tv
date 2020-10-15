@@ -11,12 +11,12 @@ const fps = 1
 const { log } = console
 
 const canais = {
-  'viva': '1459',
-  'vivafhd': '1460',
-  'vivahd': '1461',
-  'viva4k': '1462',
-  'rede': '1500',
-  'sbt': '1144',
+  'viva'         : '1459',
+  'vivafhd'      : '1460',
+  'vivahd'       : '1461',
+  'viva4k'       : '1462',
+  'rede'         : '1500',
+  'sbt'          : '1144',
 }
 
 const print = async () =>
@@ -24,17 +24,19 @@ const print = async () =>
     .then(img => Buffer.from(img).toString('base64'))
     .catch(log)
 
+setInterval(async () => io.sockets.emit('image', await print()), 1000 / fps)
+
 io.on('connection', async socket => {
   log(`user connected - IP: ${socket.handshake.address}`)
   socket.on('disconnect', () => log(`user connected - IP: ${socket.handshake.address}`))
   socket.emit('image', await print())
 })
 
-setInterval(async () => io.sockets.emit('image', await print()), 1000 / fps)
-
 app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/index.html`)
 })
+
+app.get('/canais', (req, res) => res.send(canais))
 
 app.get('/canal/:canal', (req, res) => {
   const { canal } = req.params

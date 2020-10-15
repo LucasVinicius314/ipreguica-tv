@@ -15,7 +15,7 @@
   <nav class="navbar navbar-light bg-light">
     <span class="navbar-brand mb-0 h1">IPreguiça TV</span>
   </nav>
-  <main class="container">
+  <main class="container mb-3">
     <div class="row">
       <div class="col-12">
         <div class="card my-2">
@@ -48,11 +48,7 @@
           <div class="card-header">Canais</div>
           <div class="card-body">
 
-            <button class="btn btn-info my-1 canal">viva</button>
-            <button class="btn btn-info my-1 canal">vivahd</button>
-            <button class="btn btn-info my-1 canal">vivafhd</button>
-            <button class="btn btn-info my-1 canal">viva4k</button>
-            <button class="btn btn-info my-1 canal">sbt</button>
+            <div class="row canais"></div>
 
           </div>
         </div>
@@ -70,7 +66,7 @@
       <div class="col-12">
         <div class="card my-2">
           <div class="card-header">Tela</div>
-          <div class="card-body">
+          <div class="card-body p-0">
 
             <img id="tela" class="w-100 h-100">
 
@@ -79,6 +75,13 @@
       </div>
     </div>
   </main>
+  <footer class="border-top text-center font-small mb-0 p-0">
+    <div class="footer-copyright py-4">
+      <a href="https://github.com/LucasVinicius314" target="_blank">
+        <small>Copyright © 2020 Sure</small>
+      </a>
+    </div>
+  </footer>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     $(document).ready(() => {
@@ -89,32 +92,62 @@
 
       socket.on('image', d => $('#tela').attr('src', `data:image/png;base64, ${d}`))
 
+      $.get(`/canais/`)
+        .then(d => {
+          log(d)
+          $('.canais').html('')
+          Object.keys(d).forEach(v => {
+            const el = $(`
+            <div class="col-4">
+              <button class="btn btn-info w-100 my-1 canal">${v}</button>
+            </div>
+            `)
+            el.on('click', () =>
+              $.get(`/canal/nome/${v}`)
+                .then(d => log(d))
+                .catch(log))
+            $('.canais').append(el)
+          })
+        })
+        .catch(log)
+
       $('#btnnumero').on('click', () => {
         const canal = $('#numero').val()
         $.get(`/canal/${canal}`)
-          .then(d => log(d))
-          .catch(e => log(e))
+          .then(log)
+          .catch(log)
       })
 
       $('#btnnome').on('click', () => {
         const nome = $('#nome').val()
         $.get(`/canal/nome/${nome}`)
-          .then(d => log(d))
-          .catch(e => log(e))
+          .then(log)
+          .catch(log)
       })
 
       $('button.canal').on('click', function () {
         const nome = $(this).html()
         $.get(`/canal/nome/${nome}`)
-          .then(d => log(d))
-          .catch(e => log(e))
+          .then(log)
+          .catch(log)
       })
 
       $('button.mudo').on('click', () => {
         const controle = 'm'
         $.get(`/controle/${controle}`)
-          .then(d => log(d))
-          .catch(e => log(e))
+          .then(log)
+          .catch(log)
+      })
+
+      $('#tela').on('click', e => {
+        const width = $('#tela').width()
+        const height = $('#tela').height()
+        const mouseX = e.offsetX
+        const mouseY = e.offsetY
+        log({
+          x: Math.round((mouseX / width) * 1366),
+          y: Math.round((768 - (mouseY / height) * 768)),
+        })
       })
 
     })
