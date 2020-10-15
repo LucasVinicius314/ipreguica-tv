@@ -67,12 +67,27 @@
           </div>
         </div>
       </div>
+      <div class="col-12">
+        <div class="card my-2">
+          <div class="card-header">Tela</div>
+          <div class="card-body">
+
+            <img id="tela" class="w-100 h-100">
+
+          </div>
+        </div>
+      </div>
     </div>
   </main>
+  <script src="/socket.io/socket.io.js"></script>
   <script>
     $(document).ready(() => {
 
       const { log } = console
+
+      const socket = io()
+
+      socket.on('image', d => $('#tela').attr('src', `data:image/png;base64, ${d}`))
 
       $('#btnnumero').on('click', () => {
         const canal = $('#numero').val()
@@ -88,7 +103,7 @@
           .catch(e => log(e))
       })
 
-      $('button.canal').on('click', function(){
+      $('button.canal').on('click', function () {
         const nome = $(this).html()
         $.get(`/canal/nome/${nome}`)
           .then(d => log(d))

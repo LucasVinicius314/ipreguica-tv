@@ -6,7 +6,9 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
-    "robotjs": "^0.6.0"
+    "robotjs": "^0.6.0",
+    "screenshot-desktop": "^1.12.2",
+    "socket.io": "^2.3.0"
   },
   "scripts": {
     "start": "node index.js"
