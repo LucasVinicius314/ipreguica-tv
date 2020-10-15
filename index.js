@@ -7,16 +7,17 @@ const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const port = process.env.PORT || 5000
 const fps = 1
+const screenSize = robot.getScreenSize()
 
 const { log } = console
 
 const canais = {
-  'viva'         : '1459',
-  'vivafhd'      : '1460',
-  'vivahd'       : '1461',
-  'viva4k'       : '1462',
-  'rede'         : '1500',
-  'sbt'          : '1144',
+  'viva': '1459',
+  'vivafhd': '1460',
+  'vivahd': '1461',
+  'viva4k': '1462',
+  'redevida': '1130',
+  'sbt': '1144',
 }
 
 const print = async () =>
@@ -32,9 +33,7 @@ io.on('connection', async socket => {
   socket.emit('image', await print())
 })
 
-app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/index.html`)
-})
+app.get('/', (req, res) => res.sendFile(`${__dirname}/index.html`))
 
 app.get('/canais', (req, res) => res.send(canais))
 
@@ -49,7 +48,14 @@ app.get('/controle/:controle', (req, res) => {
   const { controle } = req.params
   res.send(`Controle: ${controle}`)
   log(`Controle: ${controle}`)
-  robot.typeStringDelayed(controle, 240)
+  switch (controle) {
+    case 'm':
+      robot.typeStringDelayed(controle, 240)
+      break
+    case 'rmb':
+      robot.mouseClick('right')
+      break
+  }
 })
 
 app.get('/canal/nome/:nome', (req, res) => {
@@ -63,5 +69,16 @@ app.get('/canal/nome/:nome', (req, res) => {
   log(`Canal: ${nome}, número: ${canal}`)
   robot.typeStringDelayed(canal, 240)
 })
+
+app.get('/mouse/:x/:y', (req, res) => {
+  let { x, y } = req.params
+  x *= screenSize.width
+  y *= screenSize.height
+  res.send(`Mouse movido para X ${x}, Y ${y}`)
+  log(`Mouse movido para X ${x}, Y ${y}`)
+  robot.moveMouse(x, y)
+  robot.mouseClick('left')
+})
+
 
 http.listen(port, () => log(`Listening on port ${port}`))

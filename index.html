@@ -59,6 +59,7 @@
           <div class="card-body">
 
             <button class="btn btn-info my-1 mudo">Mudo</button>
+            <button class="btn btn-info my-1 rmb">RMB</button>
 
           </div>
         </div>
@@ -139,15 +140,24 @@
           .catch(log)
       })
 
+      $('button.rmb').on('click', () => {
+        const controle = 'rmb'
+        $.get(`/controle/${controle}`)
+          .then(log)
+          .catch(log)
+      })
+
       $('#tela').on('click', e => {
         const width = $('#tela').width()
         const height = $('#tela').height()
         const mouseX = e.offsetX
         const mouseY = e.offsetY
-        log({
-          x: Math.round((mouseX / width) * 1366),
-          y: Math.round((768 - (mouseY / height) * 768)),
-        })
+        const x = mouseX / width
+        const y = mouseY / height
+        log({ x, y })
+        $.get(`/mouse/${x}/${y}`)
+          .then(log)
+          .catch(log)
       })
 
     })
