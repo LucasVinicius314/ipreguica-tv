@@ -19,7 +19,7 @@ Utilizando NodeJS, o controle do teclado e do mouse pode ser feito remotamente a
 
 Os pacotes necessários incluídos no `package.json` serão instalados.
 
-#### Observação
+### Observação
 
 Para que o pacote **Robot.JS** funcione corretamente é necessário ter _[Python](https://www.python.org/, "python.org")_ instalado na máquina, e também o _[pacote de desenvolvimento desktop com C++](https://visualstudio.microsoft.com/vs/features/cplusplus/, "visualstudio.microsoft.com/vs/features/cplusplus/")_ da Microsoft.
 
