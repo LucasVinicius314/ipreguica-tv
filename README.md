@@ -7,10 +7,10 @@ Projeto de automação e controle remoto de uma máquina.
 Utilizando NodeJS, o controle do teclado e do mouse pode ser feito remotamente através de uma página html servida pelo servidor.
 
 ### Pacotes utilizados
-> ###### [`express`](https://www.npmjs.com/package/express, "express")
-> ###### [`robotjs`](https://www.npmjs.com/package/robotjs, "robotjs")
-> ###### [`screenshot-desktop`](https://www.npmjs.com/package/screenshot-desktop, "screenshot-desktop")
-> ###### [`socket.io`](https://www.npmjs.com/package/socket.io, "socket.io")
+> ###### [`express`](https://www.npmjs.com/package/express "express")
+> ###### [`robotjs`](https://www.npmjs.com/package/robotjs "robotjs")
+> ###### [`screenshot-desktop`](https://www.npmjs.com/package/screenshot-desktop "screenshot-desktop")
+> ###### [`socket.io`](https://www.npmjs.com/package/socket.io "socket.io")
 
 # Instalação
 > ## `npm install`
